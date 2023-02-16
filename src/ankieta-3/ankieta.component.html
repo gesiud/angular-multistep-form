@@ -1,0 +1,38 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col card pb-2">
+      <h1>Formularz zamówienia</h1>
+      <form [formGroup]="orderForm">
+        <app-step1 *ngIf="currentStep === 1"> </app-step1>
+        <app-step2 *ngIf="currentStep === 2"> </app-step2>
+        <app-step3 *ngIf="currentStep === 3"> </app-step3>
+      </form>
+      <hr class="my-4" />
+      <div
+        class="d-flex justify-content-between"
+        [class.flex-row-reverse]="currentStep === 1"
+      >
+        <button
+          class="btn btn-warning"
+          *ngIf="currentStep > 1"
+          (click)="currentStep = currentStep - 1"
+        >
+          Wstecz
+        </button>
+
+        <button
+          class="btn btn-success"
+          *ngIf="currentStep < 3"
+          (click)="currentStep = currentStep + 1"
+          [disabled]="orderForm.controls['step' + currentStep].invalid"
+        >
+          Dalej
+        </button>
+        <button class="btn btn-primary" *ngIf="currentStep === 3">
+          Wyślij
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<pre>{{ orderForm.value | json }}</pre>
