@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { OrderForm } from './order-form.model';
+import { OrderFormService } from './order-form.service';
 import { Step1Component } from './step1/step1.component';
 import { Step2Component } from './step2/step2.component';
 import { Step3Component } from './step3/step3.component';
@@ -11,6 +13,7 @@ import { Step3Component } from './step3/step3.component';
   templateUrl: './ankieta.component.html',
   standalone: true,
   imports: [
+    RouterModule,
     ReactiveFormsModule,
     CommonModule,
     Step1Component,
@@ -18,8 +21,14 @@ import { Step3Component } from './step3/step3.component';
     Step3Component,
   ],
 })
-export class AnkietaComponent {
-  currentStep = 1;
+export class AnkietaComponent implements OnInit {
+  orderFormService = inject(OrderFormService);
 
-  orderForm = new FormGroup<Partial<OrderForm>>({});
+  currentStep = 1;
+  orderForm: FormGroup<OrderForm>;
+
+  ngOnInit(): void {
+    this.orderForm = this.orderFormService.orderForm;
+    this.currentStep = this.orderFormService.currentStep;
+  }
 }

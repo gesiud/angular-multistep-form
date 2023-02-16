@@ -2,8 +2,12 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrderForm, Step1, Step2, Step3 } from './order-form.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OrderFormService {
+  currentStep = 1;
+
   orderForm = new FormGroup<OrderForm>({
     step1: new FormGroup<Step1>({
       firstname: new FormControl<string>('', {
@@ -24,6 +28,4 @@ export class OrderFormService {
       payment: new FormControl<string>('', [Validators.required]),
     }),
   });
-
-  constructor() {}
 }

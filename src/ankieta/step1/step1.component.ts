@@ -1,12 +1,7 @@
-import { Component } from '@angular/core';
-import {
-  ControlContainer,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Step1 } from '../order-form.model';
+import { OrderFormService } from '../order-form.service';
 
 @Component({
   selector: 'app-step1',
@@ -15,17 +10,11 @@ import { Step1 } from '../order-form.model';
   imports: [ReactiveFormsModule],
 })
 export class Step1Component {
-  step1Form = new FormGroup<Step1>({
-    firstname: new FormControl<string>('', {
-      nonNullable: false,
-      validators: [Validators.required],
-    }),
-    lastname: new FormControl<string>('', [Validators.required]),
-    email: new FormControl<string>('', [Validators.required]),
-    phone: new FormControl<string>('', [Validators.required]),
-  });
+  orderFormService = inject(OrderFormService);
+  step1Form: FormGroup<Step1>;
 
-  constructor(private controlContainer: ControlContainer) {
-    (controlContainer.control as FormGroup).addControl('step1', this.step1Form);
+  ngOnInit(): void {
+    this.step1Form = this.orderFormService.orderForm.controls['step1'];
+    this.orderFormService.currentStep = 1;
   }
 }
