@@ -7,8 +7,8 @@ import { Step2Component } from './step2/step2.component';
 import { Step3Component } from './step3/step3.component';
 
 @Component({
-  selector: 'app-ankieta',
-  templateUrl: './ankieta.component.html',
+  selector: 'app-order-form',
+  templateUrl: './order-form.component.html',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -18,7 +18,7 @@ import { Step3Component } from './step3/step3.component';
     Step3Component,
   ],
 })
-export class AnkietaComponent {
+export class OrderFormComponent {
   currentStep = 1;
 
   orderForm = new FormGroup<Partial<OrderForm>>({});
